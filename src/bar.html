@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<head>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+	<style>
+		@font-face {
+			font-family: "MC";
+			src: url('font.ttf') format('truetype');
+		}
+
+		body {
+			background-color: transparent;
+			margin: 0;
+			font-family: "MC", sans-serif;
+			font-optical-sizing: auto;
+			font-weight: bold;
+			font-style: normal;
+			font-size: 60px;
+		}
+
+		#container {
+			position: relative;
+			width: 800px;
+		}
+
+		img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			margin-top: 49px;
+			image-rendering: pixelated;
+			image-rendering: -moz-crisp-edges;
+			image-rendering: crisp-edges;
+		}
+
+		#progress {
+			clip-path: inset(0 0 0 0);
+			transition: clip-path 0.3s ease;
+		}
+
+		#level {
+			position: absolute;
+			text-align: center;
+			width: 100%;
+			left: 0;
+			right: 0;
+			margin: 0;
+			color: #91ff33;
+			-webkit-text-stroke-width: 3.25px;
+			-webkit-text-stroke-color: black;
+		}
+	</style>
+</head>
+<body>
+<div id="container">
+	<img id="background" src="https://cdn.discordapp.com/attachments/1167169375346905160/1252007515777011762/experience_bar_background.png?ex=6670a65c&is=666f54dc&hm=2bc6503ad3df8aaae39c568578d5f6005f5234823e400d8c230c59d89b618165&">
+	<img id="progress" src="https://cdn.discordapp.com/attachments/1167169375346905160/1252007516108226720/experience_bar_progress.png?ex=6670a65d&is=666f54dd&hm=4937002b19c2bb6aaa3cd34c1b7b1a7211b309691f21928abb97d0c1214e02b5&">
+	<p id="level"></p>
+</div>
+
+<script>
+	addEventListener("load", () => {
+		new Promise(() => setInterval(fetchXp, 1000));
+	});
+
+	async function fetchXp() {
+		const response = await fetch("api/xp");
+		const xp = await response.json();
+
+		const progressImage = document.getElementById('progress');
+		const clip = 100 - (xp.progress * 100);
+		progressImage.style.clipPath = `inset(0 ${clip}% 0 0)`;
+
+
+		const level = document.getElementById('level');
+		level.innerText = xp.level;
+	}
+</script>
+</body>

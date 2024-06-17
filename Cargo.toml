@@ -1,0 +1,18 @@
+[package]
+name = "granja_bot"
+version = "0.1.0"
+edition = "2021"
+
+[profile.dev]
+opt-level = 1
+[profile.dev.package."*"]
+opt-level = 3
+
+[dependencies]
+azalea = { git = "https://github.com/img00/azalea", rev = "0f0e2f8" }
+tokio = "1.38.0"
+anyhow = "1.0.86"
+axum = "0.7.5"
+serde_json = "1.0.117"
+serde = { version = "1.0.203", features = ["derive"] }
+tower-http = { version = "0.5.2", features = ["fs"] }
