@@ -22,7 +22,7 @@ pub async fn create_web_server(state: State) {
         .route("/api/xp", get(experience_handler))
         .route("/", get(bar_handler));
 
-    let addr = SocketAddr::from(([127, 0, 0, 1], 2000));
+    let addr = SocketAddr::from(([127, 0, 0, 1], 3600));
     let listener = TcpListener::bind(addr).await.unwrap();
     axum::serve(listener, app).await.unwrap();
 }
