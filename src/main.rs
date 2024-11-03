@@ -11,11 +11,11 @@ mod bot;
 mod model;
 mod web;
 
-pub const ATTACK_DELAY: u16 = 1000;
+pub const ATTACK_DELAY: u64 = 1000;
 
 #[tokio::main]
 async fn main() {
-    let farmer = Account::microsoft("begrapa@outlook.com").await.unwrap();
+    let farmer = Account::offline("BeGrapa");
     let afk = Account::offline("BeGrapa2");
 
     SwarmBuilder::new()
@@ -23,7 +23,7 @@ async fn main() {
         .set_swarm_handler(swarm_handle)
         .add_account(farmer)
         .add_account(afk)
-        .start("localhost:25566")
+        .start("lanevera.minecraft.best")
         .await
         .unwrap();
 }

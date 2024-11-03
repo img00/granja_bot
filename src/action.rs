@@ -1,6 +1,6 @@
 use anyhow::{anyhow, Result};
 use azalea::ecs::prelude::{With, Without};
-use azalea::entity::metadata::ArmorStand;
+use azalea::entity::metadata::Allay;
 use azalea::entity::{Dead, LocalEntity, Position};
 use azalea::prelude::*;
 use azalea::world::{InstanceName, MinecraftEntityId};
@@ -46,7 +46,7 @@ async fn find_nearest_armor_stand(bot: &Client) -> Result<Option<MinecraftEntity
         let mut ecs = bot.ecs.lock();
         let mut query = ecs
             .query_filtered::<(&MinecraftEntityId, &Position, &InstanceName), (
-                With<ArmorStand>,
+                With<Allay>,
                 Without<LocalEntity>,
                 Without<Dead>,
             )>();

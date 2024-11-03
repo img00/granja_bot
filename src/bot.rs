@@ -10,7 +10,7 @@ use tokio::time::sleep;
 
 use crate::action::attack_nearest_armor_stand;
 use crate::model::Experience;
-use crate::web;
+use crate::{web, ATTACK_DELAY};
 use crate::web::create_web_server;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -59,7 +59,7 @@ pub async fn handle(mut bot: Client, event: Event, state: State) -> anyhow::Resu
 
             spawn(async move {
                 loop {
-                    sleep(Duration::from_millis(500)).await;
+                    sleep(Duration::from_millis(ATTACK_DELAY)).await;
 
                     {
                         let connected = state.connected.lock().await;
