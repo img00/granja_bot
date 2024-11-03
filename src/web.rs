@@ -1,12 +1,10 @@
 use std::net::SocketAddr;
 use std::sync::{Arc, LazyLock};
 
-use axum::response::Html;
 use axum::routing::get;
 use axum::{Json, Router};
 use tokio::net::TcpListener;
 use tokio::sync::Mutex;
-use tower_http::services::ServeDir;
 
 use crate::bot::State;
 use crate::model::Experience;
@@ -18,9 +16,7 @@ pub async fn create_web_server(state: State) {
     update_state(state).await;
 
     let app = Router::new()
-        .nest_service("/assets", ServeDir::new("assets"))
-        .route("/api/xp", get(experience_handler))
-        .route("/", get(bar_handler));
+        .route("/api/xp", get(experience_handler));
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 3600));
     let listener = TcpListener::bind(addr).await.unwrap();
@@ -33,8 +29,4 @@ pub async fn update_state(state: State) {
 
 async fn experience_handler() -> Json<Experience> {
     Json(*SHARED_STATE.lock().await.experience.lock().await)
-}
-
-async fn bar_handler() -> Html<&'static str> {
-    Html(include_str!("bar.html"))
 }
